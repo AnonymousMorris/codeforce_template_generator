@@ -1,0 +1,28 @@
+#/bin/bash
+
+t=$1
+
+for(( i=1; ; i++)) 
+do
+    if [ ! -f "in$i" ]
+    then 
+        break
+    fi
+
+    out=$(mktemp)
+    ./$1 < in$i > $out
+
+    diff=$(diff $out cor$i -Z -b -B)
+    if [ "$diff" != "" ];
+    then
+        echo -e "test case $i failed X \ninput:"
+        cat "in$i"
+        echo -e "correct:"
+        cat "cor$i"
+        echo -e "output:"
+        cat "$out"
+        echo -e "\n"
+    else 
+        echo "test case $i passed O"
+    fi
+done
