@@ -16,3 +16,10 @@ def get_input_output(url):
     print(output_text)
     ans = [input_text, output_text]
     return ans
+
+
+def get_problem_title(url):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, "html.parser")
+    title = soup.select_one('.header .title').text
+    return title

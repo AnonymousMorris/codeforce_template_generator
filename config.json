@@ -1,0 +1,12 @@
+{
+  "language": "C++",
+  "C++": {
+    "template_name": "template"
+  },
+  "Python": {
+    "template_name": "template"
+  },
+  "Java": {
+    "template_name": "template"
+  }
+}
