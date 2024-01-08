@@ -1,6 +1,10 @@
 # set up to link to python interpreter
-
+import os
 import sys
+
+import init
+import new
+import file_utils
 
 
 def check_number_of_arguments(expect, args):
@@ -9,7 +13,7 @@ def check_number_of_arguments(expect, args):
         sys.exit()
 
 
-if len(sys.argv) < 2:
+if len(sys.argv) < 2 or len(sys.argv) > 3:
     print("invalid arguments")
     print("arguments are:")
     for arg in sys.argv:
@@ -17,14 +21,22 @@ if len(sys.argv) < 2:
     sys.exit()
 
 option = sys.argv[1]
+
+# store path to working directory and program directory
+dest_dir = os.getcwd()
+working_dir = os.getcwd()
+while not file_utils.is_cf_dir(working_dir):
+    working_dir = os.path.dirname(working_dir)
+program_path = os.path.dirname(os.path.realpath(__file__))
+
 match option:
     case "init":
         check_number_of_arguments(2, sys.argv)
-        # todo call init function
+        init.init(working_dir, program_path)
     case "new":
         check_number_of_arguments(3, sys.argv)
         contest_url = sys.argv[2]
-        # todo call new function
+        new.new(contest_url, working_dir, dest_dir)
     case "refresh":
         check_number_of_arguments(2, sys.argv)
         # todo implement refresh logs

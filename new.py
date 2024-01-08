@@ -4,7 +4,7 @@ import requests
 import json
 
 import scraper
-import file_utlls
+import file_utils
 
 
 def new_problem(url, working_dir, dest_dir):
@@ -15,7 +15,7 @@ def new_problem(url, working_dir, dest_dir):
     title = scraper.get_problem_title(url)
     new_problem_path = os.path.join(dest_dir, title)
     # copy template code into directory
-    file_utlls.copy_file(template_path, new_problem_path)
+    file_utils.copy_file(template_path, new_problem_path)
     # create the example input.txt and output.txt
     example = scraper.get_input_output(url)
     input_path = os.path.join(new_problem_path, "input.txt")

@@ -12,9 +12,9 @@ def notify_working_and_program_path():
     print(program_path)
 
 
-def is_cf_dir():
+def is_cf_dir(path):
     notify_working_and_program_path()
-    return os.path.exists(os.path.join(working_dir, "config.json"))
+    return os.path.exists(os.path.join(path, "config.json"))
 
 
 def check_path_exists(file_path):
@@ -46,4 +46,4 @@ def copy_dir(src_path, dest_path):
 
 if __name__ == "__main__":
     notify_working_and_program_path()
-    print(is_cf_dir())
+    print(is_cf_dir(working_dir))
