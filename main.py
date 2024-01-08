@@ -1,3 +1,5 @@
+# set up to link to python interpreter
+
 import requests
 import sys
 import re
@@ -43,5 +45,3 @@ for problem in problems:
     url = contestURL + "problem/{index}"
     url.format(index=problem["index"])
     input_output_text.append(get_input_output(url))
-
-
