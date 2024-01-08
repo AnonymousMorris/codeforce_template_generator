@@ -27,6 +27,9 @@ dest_dir = os.getcwd()
 working_dir = os.getcwd()
 while not file_utils.is_cf_dir(working_dir):
     working_dir = os.path.dirname(working_dir)
+    if working_dir == "/":
+        print("Error: cannot find codeforce space. Make sure to use cf init")
+        sys.exit()
 program_path = os.path.dirname(os.path.realpath(__file__))
 
 match option:
