@@ -2,18 +2,9 @@ import sys
 import os
 import shutil
 
-working_dir = os.getcwd()
-program_path = os.path.dirname(os.path.realpath(__file__))
-
-
-def notify_working_and_program_path():
-    print("Notifying working directory")
-    print(working_dir)
-    print(program_path)
-
 
 def is_cf_dir(path):
-    notify_working_and_program_path()
+    print("is_cf_dir called with path " + path)
     return os.path.exists(os.path.join(path, "config.json"))
 
 
@@ -36,6 +27,7 @@ def check_path_exists(file_path):
 
 def copy_file(src_path, dest_path):
     check_path_exists(dest_path)
+    print("copying " + src_path + " to " + dest_path)
     shutil.copy(src_path, dest_path)
 
 
@@ -44,6 +36,6 @@ def copy_dir(src_path, dest_path):
     shutil.copytree(src_path, dest_path)
 
 
-if __name__ == "__main__":
-    notify_working_and_program_path()
-    print(is_cf_dir(working_dir))
+def make_dirs(path):
+    check_path_exists(path)
+    os.mkdir(path)

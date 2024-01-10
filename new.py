@@ -9,13 +9,15 @@ import file_utils
 
 def new_problem(url, working_dir, dest_dir):
     skeleton_dir = os.path.join(working_dir, "skeleton")
-    config = json.load(open(os.path.join(skeleton_dir, "config.json")))
+    config = json.load(open(os.path.join(working_dir, "config.json")))
     template_path = os.path.join(skeleton_dir, config["language"], config[config["language"]]["template_name"])
     # web scrape to get name of problem
     title = scraper.get_problem_title(url)
     new_problem_path = os.path.join(dest_dir, title)
+    # create problem dir
+    file_utils.make_dirs(new_problem_path)
     # copy template code into directory
-    file_utils.copy_file(template_path, new_problem_path)
+    file_utils.copy_file(template_path, os.path.join(new_problem_path, config[config["language"]]["solution file name"]))
     # create the example input.txt and output.txt
     example = scraper.get_input_output(url)
     input_path = os.path.join(new_problem_path, "input.txt")
@@ -28,7 +30,7 @@ def new_problem(url, working_dir, dest_dir):
 
 def new_contest(url, working_dir, dest_dir):
     # get contest id from url
-    match = re.search(r"contests/(\d+)", url)
+    match = re.search(r"contest/(\d+)", url)
     contest_id = ""
     print(match)
     if match:

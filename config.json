@@ -1,12 +1,16 @@
 {
+  "codespace name": "cf gen",
   "language": "C++",
   "C++": {
-    "template_name": "template"
+    "template_name": "template.cpp",
+    "solution file name": "solution.cpp"
   },
   "Python": {
-    "template_name": "template"
+    "template_name": "template.py",
+    "solution file name": "solution.py"
   },
   "Java": {
-    "template_name": "template"
+    "template_name": "template.java",
+    "solution file name": "solution.java"
   }
 }

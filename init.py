@@ -2,19 +2,15 @@ import os
 import sys
 import file_utils
 
-print(sys.path)
-print(os.getcwd())
-
 
 def init(working_dir, program_path):
-    file_utils.notify_working_and_program_path()
-    if file_utils.is_cf_dir():
+    if file_utils.is_cf_dir(working_dir):
         print(working_dir + " is already a contest space")
         sys.exit()
     else:
         contests_dir = os.path.join(working_dir, "contests")
         os.mkdir(contests_dir)
-        practice_dir = os.path.join(working_dir, "practice_problems")
+        practice_dir = os.path.join(working_dir, "individual_problems")
         os.mkdir(practice_dir)
         skeleton_dest_path = os.path.join(working_dir, "skeleton")
         skeleton_src_path = os.path.join(program_path, "skeleton")

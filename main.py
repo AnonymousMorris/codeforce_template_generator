@@ -20,8 +20,6 @@ if len(sys.argv) < 2 or len(sys.argv) > 3:
         print(arg)
     sys.exit()
 
-option = sys.argv[1]
-
 # store path to working directory and program directory
 dest_dir = os.getcwd()
 working_dir = os.getcwd()
@@ -32,10 +30,18 @@ while not file_utils.is_cf_dir(working_dir):
         sys.exit()
 program_path = os.path.dirname(os.path.realpath(__file__))
 
+
+def check_path():
+    print("working directory: " + working_dir)
+    print("program path: " + program_path)
+    print("destination directory: " + dest_dir)
+
+# call method corresponding to arg
+option = sys.argv[1]
 match option:
     case "init":
         check_number_of_arguments(2, sys.argv)
-        init.init(working_dir, program_path)
+        init.init(dest_dir, program_path)
     case "new":
         check_number_of_arguments(3, sys.argv)
         contest_url = sys.argv[2]
