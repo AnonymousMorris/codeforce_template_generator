@@ -1,4 +1,4 @@
-# set up to link to python interpreter
+#!/sur/bin/env python
 import os
 import sys
 

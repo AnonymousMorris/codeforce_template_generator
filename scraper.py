@@ -23,3 +23,10 @@ def get_problem_title(url):
     soup = BeautifulSoup(page.content, "html.parser")
     title = soup.select_one('.header .title').text
     return title
+
+
+def get_input_spec(url):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    Input_spec = soup.find("div", {"class": "input-specification"})
+    return Input_spec.text
