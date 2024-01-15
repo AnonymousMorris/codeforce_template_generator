@@ -1,5 +1,28 @@
+import itertools
+
 import requests
 from bs4 import BeautifulSoup
+
+
+def get_contest_info(url):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, "html.parser")
+    # getting the title of the contest
+    title_box = soup.find("table", {"class": "rtable"})
+    title = title_box.find("a").get_text()
+    # getting the indexes of the problems
+    problems_table = soup.find("table", {"class": "problems"})
+    problems_rows = problems_table.find_all("tr")
+    problems = []
+    for i, row in enumerate(problems_rows):
+        if i == 0:
+            continue
+        else:
+            problem = [data.find("a").get_text(strip=True) for data in itertools.islice(row.find_all("td"), 2)]
+            problems.append({"index": problem[0], "name": problem[1]})
+    print("contest: " + title + "\nproblems: ", end="")
+    print(problems)
+    return {"contest_name": title, "problems": problems}
 
 
 def get_input_output(url):

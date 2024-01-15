@@ -39,21 +39,26 @@ def new_contest(url, working_dir, dest_dir):
         print("invalid url: cannot find contest ID in the link given")
         return
 
-    # call api to get list of problems
-    apiURL = ("https://codeforces.com/api/contest.standings?contestId={"
-              "contestId}&asManager=false&from=1&count=5&showUnofficial=true")
-    contestURL = apiURL.format(contestId=str(contest_id))
-    response = requests.get(contestURL)
-    # confirms success of api call else quit
-    if not response.ok:
-        print("api call failed: try waiting 2 seconds before retrying")
-        return
-    data = response.json()
-    contestName = data["result"]["contest"]["name"]
+    # # call api to get list of problems
+    # apiURL = ("https://codeforces.com/api/contest.standings?contestId={"
+    #           "contestId}&asManager=false&from=1&count=5&showUnofficial=true")
+    # contestURL = apiURL.format(contestId=str(contest_id))
+    # response = requests.get(contestURL)
+
+    # # confirms success of api call else quit
+    # if not response.ok:
+    #     print("api call failed: try waiting 2 seconds before retrying")
+    #     print(response)
+    #     return
+    # data = response.json()
+    # contestName = data["result"]["contest"]["name"]
+    data = scraper.get_contest_info(url)
+    contestName = data["contest_name"]
+
     new_contest_path = os.path.join(dest_dir, contestName)
     os.mkdir(new_contest_path)
     # call new_problem with each of the individual problem url
-    problems = data["result"]["problems"]
+    problems = data["problems"]
     for problem in problems:
         problem_url = url + "/problem/" + problem["index"]
         new_problem(problem_url, working_dir, new_contest_path)
