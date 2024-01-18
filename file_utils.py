@@ -12,7 +12,6 @@ def check_path_exists(file_path):
     exists = os.path.exists(file_path)
     if exists:
         print("warning: " + file_path + " already exists")
-        print("Would you like to overwrite the file? y/n")
         option = input("Would you like to overwrite the file? [y/n]")
         option = option.lower()
         if option == "y":
@@ -32,7 +31,8 @@ def copy_file(src_path, dest_path):
 
 
 def copy_dir(src_path, dest_path):
-    check_path_exists(dest_path)
+    if check_path_exists(dest_path):
+        print("copy dir called with args:" + src_path + " to " + dest_path)
     shutil.copytree(src_path, dest_path)
 
 

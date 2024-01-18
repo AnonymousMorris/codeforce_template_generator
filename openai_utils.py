@@ -23,9 +23,8 @@ def api_call(msg):
     return completion.choices[0].message.content
 
 
-def get_generator(url):
-    config = json.load(open('stress_gen_prompt.json'))
-    url = "https://codeforces.com/contest/1919/problem/C"
+def get_generator(stress_dir, url):
+    config = json.load(open(os.path.join(stress_dir, 'stress_gen_prompt.json')))
     # input specification
     input_spec_prompt = config['input_spec']
     input_spec = scraper.get_input_spec(url)
@@ -34,7 +33,7 @@ def get_generator(url):
     input_text = scraper.get_input_output(url)[0]
     # example code
     Example_code_prompt = config["Example_code_prompt"]
-    Example_code = open('example_code.cpp', 'r').read()
+    Example_code = open(os.path.join(stress_dir, 'example_code.cpp'), 'r').read()
     # final reminder
     final_reminder = config["final_reminder"]
     prompt_text = input_spec_prompt + input_spec + input_text_prompt + input_text + Example_code_prompt + Example_code + final_reminder

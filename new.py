@@ -3,8 +3,24 @@ import re
 import requests
 import json
 
+import openai_utils
 import scraper
 import file_utils
+
+
+def new_stress_dir(working_dir, skeleton_dir, dest_dir, url):
+    config = json.load(open(os.path.join(working_dir, "config.json")))
+    template_dir = os.path.join(skeleton_dir, config["language"])
+    stress_dir = os.path.join(template_dir, "stress")
+    stress_dest_dir = os.path.join(dest_dir, "stress")
+    # copy entire stress testing dir
+    print("copying stress testing dir")
+    file_utils.copy_dir(stress_dir, stress_dest_dir)
+    # get ai generated stress gen code
+    code = openai_utils.get_generator(stress_dir, url)
+    stress_gen_dest_dir = os.path.join(dest_dir, "stress", "Dgen.cpp")
+    with open(stress_gen_dest_dir, "w") as file:
+        file.write(code)
 
 
 def new_problem(url, working_dir, dest_dir):
@@ -26,6 +42,9 @@ def new_problem(url, working_dir, dest_dir):
         file.write(example[0])
     with open(output_path, "w") as file:
         file.write(example[1])
+    # create stress test
+    print("creating new stress_dir")
+    new_stress_dir(working_dir, skeleton_dir, new_problem_path, url)
 
 
 def new_contest(url, working_dir, dest_dir):
@@ -39,19 +58,7 @@ def new_contest(url, working_dir, dest_dir):
         print("invalid url: cannot find contest ID in the link given")
         return
 
-    # # call api to get list of problems
-    # apiURL = ("https://codeforces.com/api/contest.standings?contestId={"
-    #           "contestId}&asManager=false&from=1&count=5&showUnofficial=true")
-    # contestURL = apiURL.format(contestId=str(contest_id))
-    # response = requests.get(contestURL)
-
-    # # confirms success of api call else quit
-    # if not response.ok:
-    #     print("api call failed: try waiting 2 seconds before retrying")
-    #     print(response)
-    #     return
-    # data = response.json()
-    # contestName = data["result"]["contest"]["name"]
+    # get contest info
     data = scraper.get_contest_info(url)
     contestName = data["contest_name"]
 

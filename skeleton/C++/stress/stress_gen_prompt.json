@@ -1,0 +1,7 @@
+{
+    "input_spec" : "Write a short C++ code to generate a series of number based on these specifications to standard output:\n",
+    "input_text_prompt" : "Make sure the output text is formatted correctly. Here is an example of a correct output:",
+    "Example_code_prompt" : "An example of a response to another prompt is this:\n",
+    "final_reminder" : "\nRemember that your code is outputting text with cout based on the specifications, not taking in input.",
+    "final_final_reminder": "\n Remember that you are trying to write code to generate the input text given, not to read the input text. Your code should not take in any input. Use random number or hardcode values like t = 100 in if necessary"
+}
