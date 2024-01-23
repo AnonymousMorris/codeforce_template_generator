@@ -7,7 +7,6 @@ import openai_utils
 import scraper
 import file_utils
 
-
 def new_stress_dir(working_dir, skeleton_dir, dest_dir, url):
     config = json.load(open(os.path.join(working_dir, "config.json")))
     template_dir = os.path.join(skeleton_dir, config["language"])
@@ -34,14 +33,12 @@ def new_problem(url, working_dir, dest_dir):
     file_utils.make_dirs(new_problem_path)
     # copy template code into directory
     file_utils.copy_file(template_path, os.path.join(new_problem_path, config[config["language"]]["solution file name"]))
+
     # create the example input.txt and output.txt
-    example = scraper.get_input_output(url)
-    input_path = os.path.join(new_problem_path, "input.txt")
-    output_path = os.path.join(new_problem_path, "output.txt")
-    with open(input_path, "w") as file:
-        file.write(example[0])
-    with open(output_path, "w") as file:
-        file.write(example[1])
+    tests_data = scraper.get_input_output(url)
+    testcases_path = os.path.join(new_problem_path, "testcases")
+    scraper.write_input_output(tests_data, testcases_path)
+
     # create stress test
     print("creating new stress_dir")
     new_stress_dir(working_dir, skeleton_dir, new_problem_path, url)
